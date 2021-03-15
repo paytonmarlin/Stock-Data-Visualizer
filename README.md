@@ -28,9 +28,12 @@ This is a stock data visualizer for INFOTC 4320 - Software Engineering. This is 
 | Emajin Brown| Text |
 ---
 ### Tasks
-- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
+- [x] Get starting Python Code up
+- [ ] Coordinate group efforts, split into teams
+- [ ] Basic User function/error checking - Python Code
+- [ ] Getting API from Alpha Vantage via the 'requests' library
+- [ ] Parse data into JSON
+- [ ] Use JSON to convert to graphical representation of stock data
 ---
 ### Useful Sources:
 - [Alpha Vantage](https://www.alphavantage.co/) - Website where an API Key can be generated
