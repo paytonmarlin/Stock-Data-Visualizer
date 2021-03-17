@@ -49,5 +49,5 @@ Below is a list of meetings and what the general discussion was about...
 
 -----
 
-## Walkthrough
-*to be continued...*
+## Walkthrough (Git/Github)
+Step 1:
