@@ -184,7 +184,7 @@ while(True):
     url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
     print(url)
 #Chart will then open in new browser
-            
+    
     #checks at the end if they want to visulize again
     y = input("\n \n Would you like to calculate again? \n\n YES, y \n\n NO, n \n>>>:")
     if (y != "y"):
