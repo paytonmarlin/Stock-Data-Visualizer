@@ -167,6 +167,22 @@ while(True):
                 print("This is the incorrect End date can not be before Beginning date")
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
 
+    #Builds the URL string to get the JSON data from AlphaVantage
+    api_key = 'GR8VROXU8ASO7XHX'
+    base_url = 'https://www.alphavantage.co/query?'
+    params = { 'function': time_series,
+                'symbol': stock_symbol,
+                'interval': '30min',
+                'apikey': api_key}
+    
+    response = requests.get(base_url, params=params)
+    print(response.json())
+    #print(response)
+
+
+    #test to print URL
+    url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
+    print(url)
 #Chart will then open in new browser
             
     #checks at the end if they want to visulize again
