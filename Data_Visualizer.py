@@ -147,9 +147,13 @@ while y == 'y':
             print("This is the incorrect date string format. It should be YYYY-MM-DD")
             print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
         else:
-            #still need to check to make sure the end date is not before the beginning
-            begin = datetime.datetime(date_B_Choice) 
-            end = datetime.datetime(date_E_Choice)
+            #this checks to make sure that the end date is not before the beginning date
+            begin_List = date_B_Choice.split("-")
+            end_List = date_E_Choice.split("-")
+            
+            begin = datetime.datetime(int(begin_List[0]), int(begin_List[1]), int(begin_List[2])) 
+            end = datetime.datetime(int(end_List[0]), int(end_List[1]), int(end_List[2]))
+
             if begin < end:
                 check_Edate += 1
             else:
