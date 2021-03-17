@@ -50,4 +50,4 @@ Below is a list of meetings and what the general discussion was about...
 -----
 
 ## Walkthrough (Git/Github)
-Step 1:
+Step 1: Clone Repository to local machine!
