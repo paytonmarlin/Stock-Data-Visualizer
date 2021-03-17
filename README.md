@@ -51,3 +51,5 @@ Below is a list of meetings and what the general discussion was about...
 
 ## Walkthrough (Git/Github)
 Step 1: Clone Repository to local machine!
+
+**This is not in my local folder!!! How would I get it to my local machine???   
