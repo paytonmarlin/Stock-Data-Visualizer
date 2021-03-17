@@ -12,6 +12,7 @@
 #Putting it all in a loop to ask for user input
 
 import datetime
+import requests
 #function to check times
 def date_Format_Check(date):
     try:
@@ -21,8 +22,8 @@ def date_Format_Check(date):
         return False    
 
 
-y = "y"
-while y == 'y':
+
+while(True):
     #create varibles to hold user input
     stock_symbol = ""
     chart_Choice = 0
@@ -41,7 +42,7 @@ while y == 'y':
     -----------------------------\n""")
     check_stocks = 0
     while check_stocks < 1:
-        stock_symbol = raw_input("Please choose a stock symbol to visualize  \n>>>:")
+        stock_symbol = input("Please choose a stock symbol to visualize  \n>>>: ")
         if len(stock_symbol) < 1 or len(stock_symbol) > 5 :
             check_stocks = 0
             print("*-*-*-*-*-*-*-*-*-*-*")
@@ -66,7 +67,7 @@ while y == 'y':
             1. Bar
             2. Line
             """)
-            chart_Choice = float(input(">>>: "))
+            chart_Choice = float(input("Please choose a chart type /n>>>: "))
             if chart_Choice <= 0:
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
                 print("That's not a choice please enter either 1 or 2")
@@ -97,22 +98,27 @@ while y == 'y':
             3. Weekly
             4. Monthly
             """)
-            time_Choice = float(input(">>>: "))
+            time_seriesDict = { 1: 'TIME_SERIES_INTRADAY', 2: 'TIME_SERIES_DAILY', 3: 'TIME_SERIES_WEEKLY', 4: 'TIME_SERIES_MONTHLY'}
+            time_Choice = int(input("Please enter the time of the stock data>>>: "))
+            time_series = time_seriesDict[time_Choice]
             if time_Choice <= 0:
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
                 print("That's not a choice please enter a number in the range of 1-4")
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+                print(time_series[time_Choice])
             else:
                 if time_Choice > 4:
                     print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
                     print("That's not a choice please enter a number in the range of 1-4")
                     print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+                    print(time_series[time_Choice])
                 else:
                     check_time += 1
         except:
             print("*-*-*-*-*-*-*-*-*-*-*")
             print("That's not a number please choose a number")
-            print("*-*-*-*-*-*-*-*-*-*-*\n")    
+            print("*-*-*-*-*-*-*-*-*-*-*\n")
+            print(time_series[time_Choice])
 
 
 
@@ -123,7 +129,7 @@ while y == 'y':
             Enter the Beginning Date
             ---------------------------------------------------------
             """)
-        date_B_Choice = raw_input("(YYYY-MM-DD) >>>: ")
+        date_B_Choice = input("(YYYY-MM-DD) >>>: ")
         format_Answer = date_Format_Check(date_B_Choice)
         if format_Answer == False:
             print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
@@ -140,7 +146,7 @@ while y == 'y':
             Enter the End Date
             ---------------------------------------------------------
             """)
-        date_E_Choice = raw_input("(YYYY-MM-DD) >>>: ")
+        date_E_Choice = input("(YYYY-MM-DD) >>>: ")
         format_Answer = date_Format_Check(date_E_Choice)
         if format_Answer == False:
             print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
@@ -164,19 +170,10 @@ while y == 'y':
 #Chart will then open in new browser
             
     #checks at the end if they want to visulize again
-    y = raw_input("\n \n Would you like to calculate again? \n\n YES, y \n\n NO, n \n>>>:")
+    y = input("\n \n Would you like to calculate again? \n\n YES, y \n\n NO, n \n>>>:")
+    if (y != "y"):
+        break
         
-#Good-bye message if they don't choose y
-if y!= 'y':
-    print("*")
-    print("*~*")
-    print("*~*~*")
-    print("*~*~*~*")
-    print("Good Bye :)")
-    print("*~*~*~*")
-    print("*~*~*")
-    print("*~*")
-    print("*")
 
 
 
