@@ -64,8 +64,9 @@ while(True):
             print("""
             Chart Types
             -------------------
-            1. Bar
-            2. Line
+            1. Line
+            2. Bar
+            3. Scatter
             """)
             chart_Choice = float(input("Please choose a chart type /n>>>: "))
             if chart_Choice <= 0:
@@ -183,7 +184,81 @@ while(True):
     #test to print URL
     url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
     print(url)
+
 #Chart will then open in new browser
+
+    #chart_Choice = float(input("Please choose a chart type /n>>>: 1, 2, 3 "))
+    if chart_Choice == 1:
+
+
+        #!/usr/bin/python3
+
+        import numpy as np
+        import matplotlib.pyplot as plt
+
+        t = np.arange(i)
+        s = np.sin(response)
+        plt.plot(t, s)
+
+        plt.xlabel(i)
+        plt.ylabel(y)
+
+        plt.title(date_B_Choice, date_E_Choice)
+        plt.grid(True)
+
+        plt.show()
+
+    elif chart_Choice == 2:
+        from matplotlib import pyplot as plt
+        from matplotlib import style
+
+        style.use('ggplot')
+
+        x = [i]
+        y = [response]
+
+        fig, ax = plt.subplots()
+
+        ax.bar(x, y, align='center')
+
+        ax.set_title(date_B_Choice, date_E_Choice)
+        ax.set_ylabel(y)
+        ax.set_xlabel(x)
+
+
+        plt.show()
+
+    elif chart_Choice == 3:
+        import matplotlib.pyplot as plt
+
+        x_axis1 = [i]
+        y_axis1 = [response]
+
+        x_axis2 = [i]
+        y_axis2 = [response] 
+
+        plt.title(date_B_Choice, date_E_Choice)
+
+        plt.scatter(x_axis1, y_axis1, color='darkblue', marker='x', label="item 1")
+        plt.scatter(x_axis2, y_axis2, color='darkred', marker='x', label="item 2")
+
+        for i in range(date_B_Choice, date_E_Choice):
+            i++
+
+        for y in range(1,2000):
+            y++
+
+        plt.xlabel(i)
+        plt.ylabel(y)
+
+        plt.grid(True)
+        plt.legend()
+
+        plt.show()
+
+
+
+
             
     #checks at the end if they want to visulize again
     y = input("\n \n Would you like to calculate again? \n\n YES, y \n\n NO, n \n>>>:")
