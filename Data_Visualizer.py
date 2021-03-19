@@ -1,9 +1,6 @@
 #File created 10 March 2021
 #*****PLEASE READ******
-# the input function when dealing with characters does not work in CLI
-# you must use raw_input instead
-# if you are testing in IDLE use input
-# if you are testing in CLI use raw_input
+# the input function only works in CLI with python3 
 #***************************************
 
 
@@ -13,21 +10,44 @@
 
 import datetime
 import requests
+import calendar
 #function to check times
 def date_Format_Check(date):
     try:
         datetime.datetime.strptime(date, "%Y-%m-%d")
         return True
     except ValueError:
-        return False    
-
+        return False
+    
+#make sure there is no future dates or the current date
 def no_Future_Dates(date):
     today = datetime.datetime.now()
     if date > today:
         return False
+    elif date == today:
+        return False
     else:
         return True
+    
+#generate the range of dates   
+def date_Interval_Calculator(time_interval, end_date, start_date):
+    if time_interval == 1:
+       #intraDay
+        if time_interval == 2:
+            #daily
+            if time_interval == 3:
+                #weekly
+                if time_interval == 4:
+                    #monthly
+                    num_months = (end_date.year - start_date.year) * 12 + (end_date.month - start_date.month)
+                    num_months += 1
+                    for monthz in range(num_months):
+                        
+                    last_day_of_month = calendar.monthrange(2019,8)[1]
 
+
+
+    
 while(True):
     #create varibles to hold user input
     stock_symbol = ""
@@ -198,7 +218,7 @@ while(True):
     
     response = requests.get(base_url, params=params)
 
-    print(response.json())
+    #print(response.json())
 
     #test to print URL
     url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
