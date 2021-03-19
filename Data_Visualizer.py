@@ -21,7 +21,12 @@ def date_Format_Check(date):
     except ValueError:
         return False    
 
-
+def no_Future_Dates(date):
+    today = datetime.datetime.now()
+    if date > today:
+        return False
+    else:
+        return True
 
 while(True):
     #create varibles to hold user input
@@ -136,7 +141,17 @@ while(True):
             print("This is the incorrect date string format. It should be YYYY-MM-DD")
             print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
         else:
-            check_Bdate += 1
+            begin_List = date_B_Choice.split("-")
+            begin = datetime.datetime(int(begin_List[0]), int(begin_List[1]), int(begin_List[2]))
+            in_Future = no_Future_Dates(begin)
+
+            if in_Future == False:
+                print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+                print("This date is in the future please enter a date in the past")
+                print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+            else:
+                check_Bdate += 1
+            
             
  
 #Enter the end Date (YYYY-MM-DD)
@@ -154,14 +169,19 @@ while(True):
             print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
         else:
             #this checks to make sure that the end date is not before the beginning date
-            begin_List = date_B_Choice.split("-")
+            
             end_List = date_E_Choice.split("-")
             
-            begin = datetime.datetime(int(begin_List[0]), int(begin_List[1]), int(begin_List[2])) 
+             
             end = datetime.datetime(int(end_List[0]), int(end_List[1]), int(end_List[2]))
-
+            in_Future = no_Future_Dates(end)
             if begin < end:
-                check_Edate += 1
+                if in_Future == False:
+                    print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+                    print("This date is in the future please enter a date in the past")
+                    print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+                else:
+                    check_Edate += 1
             else:
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
                 print("This is the incorrect End date can not be before Beginning date")
@@ -184,7 +204,8 @@ while(True):
     url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
     print(url)
 #Chart will then open in new browser
-    
+   
+
     #checks at the end if they want to visulize again
     y = input("\n \n Would you like to calculate again? \n\n YES, y \n\n NO, n \n>>>:")
     if (y != "y"):
