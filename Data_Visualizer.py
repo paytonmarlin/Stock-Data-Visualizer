@@ -43,7 +43,7 @@ def date_Interval_Calculator(time_interval, end_date, start_date):
                     num_months += 1
                     for monthz in range(num_months):
                         
-                    last_day_of_month = calendar.monthrange(2019,8)[1]
+                        last_day_of_month = calendar.monthrange(2019,8)[1]
 
 
 
@@ -217,18 +217,23 @@ while(True):
                 'apikey': api_key}
     
     response = requests.get(base_url, params=params)
+    print(response.json())
+    print(str(response.json()))
+    if "Error Message" in response.json() :
+        print("The server is either down or you provided a ticker symbol that does not exist")
+      
+    else:
+        #print(response.json())
 
-    #print(response.json())
-
-    #test to print URL
-    url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
-    print(url)
-    #JSON Will be conqured
-    json_time_seriesDict = { 1: 'Time Series (30min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
-    json_response = response.json()
-    time_json_object = json_time_seriesDict[time_Choice]
+        #test to print URL
+        url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
+        print(url)
+        #JSON Will be conqured
+        json_time_seriesDict = { 1: 'Time Series (30min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
+        json_response = response.json()
+        time_json_object = json_time_seriesDict[time_Choice]
     
-    print(json_response[time_json_object])
+        #print(json_response[time_json_object])
 
 
 
