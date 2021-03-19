@@ -193,16 +193,28 @@ while(True):
     params = { 'function': time_series,
                 'symbol': stock_symbol,
                 'interval': '30min',
+                'outputsize': 'full',
                 'apikey': api_key}
     
     response = requests.get(base_url, params=params)
-    print(response.json())
-    #print(response)
 
+    print(response.json())
 
     #test to print URL
     url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
     print(url)
+    #JSON Will be conqured
+    json_time_seriesDict = { 1: 'Time Series (30min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
+    json_response = response.json()
+    time_json_object = json_time_seriesDict[time_Choice]
+    
+    print(json_response[time_json_object])
+
+
+
+
+
+    
 #Chart will then open in new browser
    
 
