@@ -100,8 +100,6 @@ def date_Interval_Calculator(time_interval, start_date, end_date):
                         end_date_range.append(str(end_date.year)+"-"+end_month_string+"-"+str(end_last_day_of_month))
                         count += 1
         start_date_range.extend(end_date_range)
-        for x in start_date_range:
-            print(x)
         return start_date_range
                 
 
@@ -313,6 +311,7 @@ while(True):
         date_range = date_Interval_Calculator(time_Choice, begin, end)
         for dates in date_range:
             try:
+                print(dates)
                 print(json_response[time_json_object][dates])
             except:
                 print("The date you enter does not exist in this data")
