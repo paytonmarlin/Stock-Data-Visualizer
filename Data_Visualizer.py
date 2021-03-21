@@ -30,13 +30,20 @@ def no_Future_Dates(date):
         return True
 
 #make sure dates are not past 19 years
-def nothing_Past_19(date):
+def nothing_Past_19(year, month):
     today = datetime.datetime.now()
-    in_past = today.year - 19
-    if date < in_past:
-        return False
-    else:
-        return True
+    in_past_year = today.year - 19
+    in_past_month = today.month
+    print(in_past_month)
+    if year < in_past_year:
+        
+        if month < in_past_month:
+            
+            return False
+        else:
+            
+            return True
+
 
 #generate the range of dates   
 def date_Interval_Calculator(time_interval, start_date, end_date):
@@ -92,11 +99,12 @@ def date_Interval_Calculator(time_interval, start_date, end_date):
                     
                         end_date_range.append(str(end_date.year)+"-"+end_month_string+"-"+str(end_last_day_of_month))
                         count += 1
-                
+        start_date_range.extend(end_date_range)
         for x in start_date_range:
             print(x)
-        for x in end_date_range:
-            print(x)
+        return start_date_range
+                
+
 
 
 
@@ -223,7 +231,8 @@ while(True):
                 print("This date is in the future please enter a date in the past")
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
             else:
-                in_past = nothing_Past_19(begin.year)
+                
+                in_past = nothing_Past_19(begin.year, begin.month)
                 if in_past == False:
                     print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
                     print("This date is in too far in the past")
@@ -260,7 +269,7 @@ while(True):
                     print("This date is in the future please enter a date in the past")
                     print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
                 else:
-                    in_past = nothing_Past_19(end.year)
+                    in_past = nothing_Past_19(end.year, end.month)
                     if in_past == False:
                         print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
                         print("This date is in too far in the past")
@@ -282,8 +291,8 @@ while(True):
                 'apikey': api_key}
     
     response = requests.get(base_url, params=params)
-    print(response.json())
-    print(str(response.json()))
+    #print(response.json())
+    #print(str(response.json()))
     if "Error Message" in response.json() :
         print("The server is either down or you provided a ticker symbol that does not exist")
       
@@ -301,7 +310,12 @@ while(True):
         #print(json_response[time_json_object])
 
         #call function to generate date range
-        date_Interval_Calculator(time_Choice, begin, end)
+        date_range = date_Interval_Calculator(time_Choice, begin, end)
+        for dates in date_range:
+            try:
+                print(json_response[time_json_object][dates])
+            except:
+                print("The date you enter does not exist in this data")
 
 
 
