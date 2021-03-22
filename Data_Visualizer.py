@@ -44,68 +44,6 @@ def nothing_Past_19(year, month):
             
             return True
 
-
-#generate the range of dates   
-def date_Interval_Calculator(time_interval, start_date, end_date):
- 
-    if time_interval == 1:
-    #intraDay
-        print("intraDay")
-    elif time_interval == 2:
-    #daily
-        print("daily")
-    elif time_interval == 3:
-    #weekly
-        print("weekly")
-    elif time_interval == 4:
-    #monthly
-        num_months = (end_date.year - start_date.year) * 12 + (end_date.month - start_date.month)
-        start_month = start_date.month
-        end_month = 1
-        start_date_range = []
-        end_date_range = []
-        count = 0
-        for monthz in range(num_months):
-            
-            
-            if start_month <= 12:
-                
-                start_last_day_of_month = calendar.monthrange(start_date.year,start_month)[1]
-                if start_month < 10:
-                    start_month_string = "0"+str(start_month)
-                else:
-                    start_month_string = str(start_month)
-                start_date_range.append(str(start_date.year)+"-"+start_month_string+"-"+str(start_last_day_of_month))
-                start_month += 1
-                
-            if end_date.month >= 1:
-                if end_date.month != end_month:
-                    end_last_day_of_month = calendar.monthrange(end_date.year,end_month)[1]
-                    if end_month < 10:
-                        end_month_string = "0"+str(end_month)
-                    else:
-                        end_month_string = str(end_month)
-                    
-                    end_date_range.append(str(end_date.year)+"-"+end_month_string+"-"+str(end_last_day_of_month))
-                    end_month += 1
-                else:
-                    
-                    while  count < 1:
-                        end_last_day_of_month = calendar.monthrange(end_date.year,end_month)[1]
-                        if end_month < 10:
-                            end_month_string = "0"+str(end_month)
-                        else:
-                            end_month_string = str(end_month)
-                    
-                        end_date_range.append(str(end_date.year)+"-"+end_month_string+"-"+str(end_last_day_of_month))
-                        count += 1
-        start_date_range.extend(end_date_range)
-        return start_date_range
-                
-
-
-
-
     
 while(True):
     #create varibles to hold user input
@@ -337,8 +275,7 @@ while(True):
                 json_close = []
                 json_close.append(json_response[time_json_object][date_key]["4. close"])
                 
-                json_volume = []
-                json_volume.append(json_response[time_json_object][date_key]["5. volume"])
+
                 
 #Chart will then open in new browser
    
