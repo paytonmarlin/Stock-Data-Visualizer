@@ -11,6 +11,7 @@
 import datetime
 import requests
 import calendar
+today = datetime.datetime.now()
 #function to check times
 def date_Format_Check(date):
     try:
@@ -21,7 +22,7 @@ def date_Format_Check(date):
     
 #make sure there is no future dates or the current date
 def no_Future_Dates(date):
-    today = datetime.datetime.now()
+    
     if date > today:
         return False
     elif date == today:
@@ -31,7 +32,6 @@ def no_Future_Dates(date):
 
 #make sure dates are not past 19 years
 def nothing_Past_19(year, month):
-    today = datetime.datetime.now()
     in_past_year = today.year - 19
     in_past_month = today.month
     
@@ -43,6 +43,15 @@ def nothing_Past_19(year, month):
         else:
             
             return True
+#check to make sure the beging date in INTRADAY no more than 3 days in past
+def nothing_past_3(date):
+    in_past_3 = today.day - 3
+    
+    if date < in_past_3:
+        return False
+    else:
+        return True
+
 
     
 while(True):
@@ -89,7 +98,7 @@ while(True):
             1. Bar
             2. Line
             """)
-            chart_Choice = float(input("Please choose a chart type /n>>>: "))
+            chart_Choice = float(input("Please choose a chart type \n>>>: "))
             if chart_Choice <= 0:
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
                 print("That's not a choice please enter either 1 or 2")
@@ -121,7 +130,7 @@ while(True):
             4. Monthly
             """)
             time_seriesDict = { 1: 'TIME_SERIES_INTRADAY', 2: 'TIME_SERIES_DAILY', 3: 'TIME_SERIES_WEEKLY', 4: 'TIME_SERIES_MONTHLY'}
-            time_Choice = int(input("Please enter the time of the stock data>>>: "))
+            time_Choice = int(input("Please enter the time of the stock data \n>>>: "))
             time_series = time_seriesDict[time_Choice]
             if time_Choice <= 0:
                 print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
@@ -174,7 +183,27 @@ while(True):
                     print("This date is in too far in the past")
                     print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
                 else:
-                    check_Bdate += 1
+                    if time_Choice == 1:
+                        if begin.year != today.year:
+                            print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+                            print("This date has to be in the same year and no more than 3 days in the past for INTRADAY")
+                            print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+                        else:
+                            if begin.month != today.month:
+                               print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+                               print("This date has to be in the same year and no more than 3 days in the past for INTRADAY")
+                               print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+                            else:
+                                #not sure what to do here
+                                in_past_3 = nothing_past_3(begin.day)
+                                if in_past_3 == False:
+                                   print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+                                   print("This date has to be in the same year and no more than 3 days in the past for INTRADAY")
+                                   print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+                                else:
+                                    check_Bdate += 1
+                    else:
+                        check_Bdate += 1
             
             
  
@@ -213,9 +242,12 @@ while(True):
                     else:
                         check_Edate += 1
             else:
-                print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
-                print("This is the incorrect End date can not be before Beginning date")
-                print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
+                if begin == end:
+                    check_Edate += 1
+                else:
+                    print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+                    print("This is the incorrect End date can not be before Beginning date")
+                    print("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n")
 
     #Builds the URL string to get the JSON data from AlphaVantage
     api_key = 'GR8VROXU8ASO7XHX'
@@ -227,13 +259,11 @@ while(True):
                 'apikey': api_key}
     
     response = requests.get(base_url, params=params)
-    #print(response.json())
-    #print(str(response.json()))
+
     if "Error Message" in response.json() :
         print("The server is either down or you provided a ticker symbol that does not exist")
       
     else:
-        #print(response.json())
 
         #test to print URL
         url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
@@ -242,17 +272,6 @@ while(True):
         json_time_seriesDict = { 1: 'Time Series (30min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
         json_response = response.json()
         time_json_object = json_time_seriesDict[time_Choice]
-    
-        #print(json_response[time_json_object])
-
-        #call function to generate date range
-        #date_range = date_Interval_Calculator(time_Choice, begin, end)
-        #for dates in date_range:
-           # try:
-             #   print(dates)
-             #   print(json_response[time_json_object][dates])
-            #except:
-             #   print("The date you enter does not exist in this data")
 
         for date_key in json_response[time_json_object]:
             if time_Choice == 1:
