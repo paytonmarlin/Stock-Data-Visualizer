@@ -281,6 +281,9 @@ while(True):
             
             if real_date_key >= begin and real_date_key <= end:
                 print(date_key)
+
+                json_date_key = []
+                json_date_key.append(date_key)
                 
                 json_open = []
                 json_open.append(json_response[time_json_object][date_key]["1. open"])
