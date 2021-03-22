@@ -34,7 +34,7 @@ def nothing_Past_19(year, month):
     today = datetime.datetime.now()
     in_past_year = today.year - 19
     in_past_month = today.month
-    print(in_past_month)
+    
     if year < in_past_year:
         
         if month < in_past_month:
@@ -308,17 +308,38 @@ while(True):
         #print(json_response[time_json_object])
 
         #call function to generate date range
-        date_range = date_Interval_Calculator(time_Choice, begin, end)
-        for dates in date_range:
-            try:
-                print(dates)
-                print(json_response[time_json_object][dates])
-            except:
-                print("The date you enter does not exist in this data")
+        #date_range = date_Interval_Calculator(time_Choice, begin, end)
+        #for dates in date_range:
+           # try:
+             #   print(dates)
+             #   print(json_response[time_json_object][dates])
+            #except:
+             #   print("The date you enter does not exist in this data")
 
-
-
-    
+        for date_key in json_response[time_json_object]:
+            if time_Choice == 1:
+                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d %H:%M:%S")
+            else:
+                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d")
+            
+            if real_date_key >= begin and real_date_key <= end:
+                print(date_key)
+                
+                json_open = []
+                json_open.append(json_response[time_json_object][date_key]["1. open"])
+                
+                json_high = []
+                json_high.append(json_response[time_json_object][date_key]["2. high"])
+                
+                json_low = []
+                json_low.append(json_response[time_json_object][date_key]["3. low"])
+                
+                json_close = []
+                json_close.append(json_response[time_json_object][date_key]["4. close"])
+                
+                json_volume = []
+                json_volume.append(json_response[time_json_object][date_key]["5. volume"])
+                
 #Chart will then open in new browser
    
 
