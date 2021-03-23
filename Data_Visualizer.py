@@ -11,6 +11,9 @@
 import datetime
 import requests
 import calendar
+import pygal
+import lxml
+
 today = datetime.datetime.now()
 #function to check times
 def date_Format_Check(date):
@@ -301,7 +304,27 @@ while(True):
 
                 
 #Chart will then open in new browser
-   
+    if chart_Choice == 1:
+        # Bar code
+        line_chart = pygal.Bar()
+        line_chart.title = 'Stock Data for ' + stock_symbol + ': ' + date_B_Choice + ' to ' + date_E_Choice
+        line_chart.x_labels = map(str, range(date_B_Choice, date_E_Choice))
+        line_chart.add('Open', [])
+        line_chart.add('High', [])
+        line_chart.add('Low', [])
+        line_chart.add('Close', [])
+        line_chart.render_in_browser()
+
+    elif chart_Choice == 2:
+        line_chart = pygal.Line()
+        line_chart.title = 'Stock Data for ' + stock_symbol + ': ' + date_B_Choice + ' to ' + date_E_Choice
+        line_chart.x_labels = map(str, range(date_B_Choice, date_E_Choice))
+        line_chart.add('Open', [])
+        line_chart.add('High', [])
+        line_chart.add('Low', [])
+        line_chart.add('Close', [])
+        line_chart.render_in_browser()
+        
 
     #checks at the end if they want to visulize again
     y = input("\n \n Would you like to calculate again? \n\n YES, y \n\n NO, n \n>>>:")
