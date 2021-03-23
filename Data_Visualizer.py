@@ -259,6 +259,7 @@ while(True):
                 'apikey': api_key}
     
     response = requests.get(base_url, params=params)
+    print (response.json())
 
     if "Error Message" in response.json() :
         print("The server is either down or you provided a ticker symbol that does not exist")
@@ -269,33 +270,33 @@ while(True):
         url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
         print(url)
         #JSON Will be conqured
-        json_time_seriesDict = { 1: 'Time Series (30min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
-        json_response = response.json()
-        time_json_object = json_time_seriesDict[time_Choice]
-
-        for date_key in json_response[time_json_object]:
-            if time_Choice == 1:
-                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d %H:%M:%S")
-            else:
-                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d")
-            
-            if real_date_key >= begin and real_date_key <= end:
-                print(date_key)
-
-                json_date_key = []
-                json_date_key.append(date_key)
-                
-                json_open = []
-                json_open.append(json_response[time_json_object][date_key]["1. open"])
-                
-                json_high = []
-                json_high.append(json_response[time_json_object][date_key]["2. high"])
-                
-                json_low = []
-                json_low.append(json_response[time_json_object][date_key]["3. low"])
-                
-                json_close = []
-                json_close.append(json_response[time_json_object][date_key]["4. close"])
+##        json_time_seriesDict = { 1: 'Time Series (30min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
+##        json_response = response.json()
+##        time_json_object = json_time_seriesDict[time_Choice]
+##
+##        for date_key in json_response[time_json_object]:
+##            if time_Choice == 1:
+##                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d %H:%M:%S")
+##            else:
+##                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d")
+##            
+##            if real_date_key >= begin and real_date_key <= end:
+##                print(date_key)
+##
+##                json_date_key = []
+##                json_date_key.append(date_key)
+##                
+##                json_open = []
+##                json_open.append(json_response[time_json_object][date_key]["1. open"])
+##                
+##                json_high = []
+##                json_high.append(json_response[time_json_object][date_key]["2. high"])
+##                
+##                json_low = []
+##                json_low.append(json_response[time_json_object][date_key]["3. low"])
+##                
+##                json_close = []
+##                json_close.append(json_response[time_json_object][date_key]["4. close"])
                 
 
                 
