@@ -11,6 +11,8 @@
 import datetime
 import requests
 import calendar
+import pygal
+import lxml
 today = datetime.datetime.now()
 #function to check times
 def date_Format_Check(date):
@@ -273,6 +275,11 @@ while(True):
         json_response = response.json()
         time_json_object = json_time_seriesDict[time_Choice]
 
+        json_date_key = []
+        json_open = []
+        json_high = []
+        json_low = []
+        json_close = []
         for date_key in json_response[time_json_object]:
             if time_Choice == 1:
                 real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d %H:%M:%S")
@@ -281,26 +288,52 @@ while(True):
             
             if real_date_key >= begin and real_date_key <= end:
                 print(date_key)
+                print(real_date_key)
 
-                json_date_key = []
                 json_date_key.append(date_key)
                 
-                json_open = []
-                json_open.append(json_response[time_json_object][date_key]["1. open"])
-                
-                json_high = []
-                json_high.append(json_response[time_json_object][date_key]["2. high"])
-                
-                json_low = []
-                json_low.append(json_response[time_json_object][date_key]["3. low"])
-                
-                json_close = []
-                json_close.append(json_response[time_json_object][date_key]["4. close"])
+    
+                json_open.append(float(json_response[time_json_object][date_key]["1. open"]))
                 
 
+                json_high.append(float(json_response[time_json_object][date_key]["2. high"]))
                 
-#Chart will then open in new browser
    
+                json_low.append(float(json_response[time_json_object][date_key]["3. low"]))
+                
+                json_close.append(float(json_response[time_json_object][date_key]["4. close"]))
+                
+        print(real_date_key)
+        print(json_date_key) # could use this for the x labels
+        print(json_open)
+        print(json_high)
+        print(json_low)
+        print(json_close)
+
+        beg_date = datetime.datetime.strptime(date_B_Choice,"%Y-%m-%d")
+        end_date = datetime.datetime.strptime(date_E_Choice,"%Y-%m-%d")
+#Chart will then open in new browser
+    if chart_Choice == 1:
+        print("wow")
+            # Bar code
+        line_chart = pygal.Bar()
+        line_chart.title = 'Stock Data for ' + stock_symbol + ': ' + date_B_Choice + ' to ' + date_E_Choice
+        #line_chart.x_labels = map(str, json_date_key)
+        line_chart.add('Open', json_open)
+        line_chart.add('High', json_high)
+        line_chart.add('Low', json_low)
+        line_chart.add('Close', json_close)
+        line_chart.render_in_browser()
+##
+    elif chart_Choice == 2:
+        line_chart = pygal.Line()
+        line_chart.title = 'Stock Data for ' + stock_symbol + ': ' + date_B_Choice + ' to ' + date_E_Choice
+        #line_chart.x_labels = map(str, range(2000, 2020))
+        line_chart.add('Open', json_open)
+        line_chart.add('High', json_high)
+        line_chart.add('Low', json_low)
+        line_chart.add('Close', json_close)
+        line_chart.render_in_browser()
 
     #checks at the end if they want to visulize again
     y = input("\n \n Would you like to calculate again? \n\n YES, y \n\n NO, n \n>>>:")
