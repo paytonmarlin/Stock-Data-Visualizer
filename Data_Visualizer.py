@@ -256,7 +256,7 @@ while(True):
     base_url = 'https://www.alphavantage.co/query?'
     params = { 'function': time_series,
                 'symbol': stock_symbol,
-                'interval': '30min',
+                'interval': '60min',
                 'outputsize': 'full',
                 'apikey': api_key}
     
@@ -269,9 +269,8 @@ while(True):
 
         #test to print URL
         url = 'https://www.alphavantage.co/query?function=' + time_series + '&symbol=' + stock_symbol + '&interval=' + '30min' + '&apikey=' + api_key
-        print(url)
         #JSON Will be conqured
-        json_time_seriesDict = { 1: 'Time Series (30min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
+        json_time_seriesDict = { 1: 'Time Series (60min)', 2: 'Time Series (Daily)', 3: 'Weekly Time Series', 4: 'Monthly Time Series'}
         json_response = response.json()
         time_json_object = json_time_seriesDict[time_Choice]
 
@@ -280,36 +279,51 @@ while(True):
         json_high = []
         json_low = []
         json_close = []
-        for date_key in json_response[time_json_object]:
-            if time_Choice == 1:
-                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d %H:%M:%S")
-            else:
-                real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d")
+        #Intraday function
+        if time_Choice == 1:
+            for date_key in json_response[time_json_object]:
+                #real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d %H:%M:%S")
             
-            if real_date_key >= begin and real_date_key <= end:
-                print(date_key)
-                print(real_date_key)
+            
+                if date_E_Choice in date_key:
 
-                json_date_key.append(date_key)
-                
-    
-                json_open.append(float(json_response[time_json_object][date_key]["1. open"]))
-                
+                    json_date_key.append(date_key)
+                    
+        
+                    json_open.append(float(json_response[time_json_object][date_key]["1. open"]))
+                    
 
-                json_high.append(float(json_response[time_json_object][date_key]["2. high"]))
+                    json_high.append(float(json_response[time_json_object][date_key]["2. high"]))
+                    
+       
+                    json_low.append(float(json_response[time_json_object][date_key]["3. low"]))
+                    
+                    json_close.append(float(json_response[time_json_object][date_key]["4. close"]))
+        else:
+        
+            for date_key in json_response[time_json_object]:
+                if time_Choice == 1:
+                    real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d %H:%M:%S")
+                else:
+                    real_date_key = datetime.datetime.strptime(date_key,"%Y-%m-%d")
                 
-   
-                json_low.append(float(json_response[time_json_object][date_key]["3. low"]))
+                if real_date_key >= begin and real_date_key <= end:
+
+                    json_date_key.append(date_key)
+                    
+        
+                    json_open.append(float(json_response[time_json_object][date_key]["1. open"]))
+                    
+
+                    json_high.append(float(json_response[time_json_object][date_key]["2. high"]))
+                    
+       
+                    json_low.append(float(json_response[time_json_object][date_key]["3. low"]))
+                    
+                    json_close.append(float(json_response[time_json_object][date_key]["4. close"]))
                 
-                json_close.append(float(json_response[time_json_object][date_key]["4. close"]))
-                
-        print(real_date_key)
+        #reverse the list so date can be in chronological order
         json_date_key.reverse()
-        print(json_date_key) # could use this for the x labels
-        print(json_open)
-        print(json_high)
-        print(json_low)
-        print(json_close)
 
         beg_date = datetime.datetime.strptime(date_B_Choice,"%Y-%m-%d")
         end_date = datetime.datetime.strptime(date_E_Choice,"%Y-%m-%d")
