@@ -304,6 +304,7 @@ while(True):
                 json_close.append(float(json_response[time_json_object][date_key]["4. close"]))
                 
         print(real_date_key)
+        json_date_key.reverse()
         print(json_date_key) # could use this for the x labels
         print(json_open)
         print(json_high)
@@ -316,19 +317,19 @@ while(True):
     if chart_Choice == 1:
         print("wow")
             # Bar code
-        line_chart = pygal.Bar()
-        line_chart.title = 'Stock Data for ' + stock_symbol + ': ' + date_B_Choice + ' to ' + date_E_Choice
-        #line_chart.x_labels = map(str, json_date_key)
-        line_chart.add('Open', json_open)
-        line_chart.add('High', json_high)
-        line_chart.add('Low', json_low)
-        line_chart.add('Close', json_close)
-        line_chart.render_in_browser()
+        bar_chart = pygal.Bar(x_label_rotation=20)
+        bar_chart.title = 'Stock Data for ' + stock_symbol + ': ' + date_B_Choice + ' to ' + date_E_Choice
+        bar_chart.x_labels = map(str, json_date_key)
+        bar_chart.add('Open', json_open)
+        bar_chart.add('High', json_high)
+        bar_chart.add('Low', json_low)
+        bar_chart.add('Close', json_close)
+        bar_chart.render_in_browser()
 ##
     elif chart_Choice == 2:
-        line_chart = pygal.Line()
+        line_chart = pygal.Line(x_label_rotation=20)
         line_chart.title = 'Stock Data for ' + stock_symbol + ': ' + date_B_Choice + ' to ' + date_E_Choice
-        #line_chart.x_labels = map(str, range(2000, 2020))
+        line_chart.x_labels = map(str, json_date_key)
         line_chart.add('Open', json_open)
         line_chart.add('High', json_high)
         line_chart.add('Low', json_low)
