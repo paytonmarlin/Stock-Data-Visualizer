@@ -19,13 +19,13 @@ This is a stock data visualizer for INFOTC 4320 - Software Engineering. This is 
 
 | Member | Main Role |
 | ----------- | ----------- |
-| Payton Marlin | Scrum Master |
-| Jack Dempsey | Text |
-| Noah Kirsch | Text |
-| Joe Sahrmann | Text |
-| Shawn Nguyen | Text |
-| Yang (Scott) Lui | Text |
-| Emajin Brown| Text |
+| Payton Marlin | Scrum Master - API Team |
+| Jack Dempsey | Python Validation |
+| Noah Kirsch | Chart Group |
+| Joe Sahrmann | Python Validation |
+| Shawn Nguyen | API Team |
+| Yang (Scott) Lui | Chart Group |
+| Emajin Brown| Chart Group |
 ---
 ### Tasks
 - [x] Get starting Python Code up
@@ -33,7 +33,13 @@ This is a stock data visualizer for INFOTC 4320 - Software Engineering. This is 
 - [x] Basic User function/error checking - Python Code
 - [x] Getting API from Alpha Vantage via the 'requests' library
 - [x] Parse data into JSON
-- [ ] Use JSON to convert to graphical representation of stock data
+- [x] Use JSON to convert to graphical representation of stock data
+
+### Some problems found
+- [x] How to loop over data and display into new browser
+    - Got done with FOR loop and added a list for each of the four data (open, high, close, low)
+- [x] How to display data for the INTRADAY function (right now no data is outputted)
+    - Figured out it, needed a seperate FOR loop to check the date for the specific day.
 ---
 ### Useful Sources:
 - [Alpha Vantage](https://www.alphavantage.co/) - Website where an API Key can be generated
@@ -41,13 +47,6 @@ This is a stock data visualizer for INFOTC 4320 - Software Engineering. This is 
 - [PyGal](http://www.pygal.org/en/stable/documentation/types/index.html) - Graphing Module for python for easier rendering of charts
 - [Lxml](https://lxml.de/) - Allows chart to be rendered in web browser
 - [Requests](https://requests.readthedocs.io/en/master/) - Used to make http requests and can query the API
-
-### Meetings
-Below is a list of meetings and what the general discussion was about...
-
-**March 9th - Initial Meeting**
-
------
 
 ## Walkthrough (Git/Github)
 ### STEP 1: Clone Repository to local machine!
@@ -110,3 +109,28 @@ git push
 ![Git_PUsh](/assets/Git_Push.gif)
 
 ---
+## Walkthrough for Data Visualizer
+This will be done through the terminal through Visual Studio Code, but can be done through either IDLE or your own terminal/command line/powershell. All you need to do is to navigate to the location in which the *Data_Visualizer.py* file is stored. We will be showing the line graph, since that is our preferred method to read the data, but this data can also be submitted to show a bar graph if that works best for you. 
+
+**Method #1: Getting Stock Data through one day (Intraday)**
+
+The *Intraday* function is unique in that it returns data through one specific day (the beginning of the opening day to the close of the trading day).Due to the large amount of data, we ask that you only get data **in the past three days** if you are choosing Intraday. Technically, the data stored in [AlphaVantage's](https://www.alphavantage.co/documentation/) Intraday function is from the last 60 days, but we wanted to restrict this to only the past three days. See below on how to set up the Intraday function
+
+![Intraday](/assets/Intraday.gif)
+
+**Method #2: Getting Stock Data over multiple days**
+
+The *Daily* function is a great function to see what has happend over the course of a couple days (usually under 30 days, but can be more if you want more detailed data). This function, however, differs from the Intraday function in that it doesn't have a limit to the past couple days. Alpha Vantage stores data from the past ~20 years, so no need to try and find data that is in this year. Let have a look at the daily stock data of TSLA in 2016... 
+
+![Daily](/assets/Daily.gif)
+
+**Method #3: Getting Stock Data over multiple weeks**
+
+The *Weekly* function is useful for getting data over multiple weeks. Sometimes, looking at daily stock graphs won't give as big of a picture as some would like. Let's look at the GME stock in Febuary...
+
+![Weekly](/assets/Weekly.gif)
+
+**Method #4: Getting Stock Data over multiple months**
+For the biggest picture to see what happend to a stock over the course of months, the *Monthly* function is used. Let's look at the stock of Microsoft during a few months in 2004
+
+![Monthly](/assets/Monthly.gif)
